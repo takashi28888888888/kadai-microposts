@@ -43,6 +43,12 @@ class UsersController < ApplicationController
     Micropost.where(user_id: self.following_ids + [self.id])
   end
   
+  def likes
+    @user = User.find(params[:id])
+    @likes = @user.liked_microposts.order(id: :desc).page(params[:page])
+    counts(@user)
+  end
+
   private
   
   def user_params
